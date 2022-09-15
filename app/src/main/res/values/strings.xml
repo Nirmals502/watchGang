@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">WatchGang</string>
+    <string name="title_activity_home_screen">Home_screen</string>
+    <string name="title_home">Home</string>
+    <string name="title_orginaltier">Original tier</string>
+    <string name="title_blacktier"> Black tier</string>
+    <string name="title_Platinumtier"> Platinum tier</string>
+
+</resources>
