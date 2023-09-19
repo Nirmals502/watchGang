@@ -1,0 +1,37 @@
+name: Android CI
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+
+      - name: Build with Gradle
+        run: ./gradlew build
+      - name: Archive Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-artifacts
+          path: app/build/outputs/apk/debug/*.apk
+      - name: Cache Gradle Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Set up Environment Variables
+        run: |
+          echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
+          echo "SIGNING_KEY=${{ secrets.SIGNING_KEY }}" >> $GITHUB_ENV
+
